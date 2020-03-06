@@ -72,6 +72,7 @@ public class Letter {
         List<XWPFTable> tables = document.getTables();
         for (XWPFTable table : tables) {
             for (XWPFTableRow row : table.getRows()) {
+
                 for (XWPFTableCell cell : row.getTableCells()) {
 //                    System.out.println(">>>>>>>" + cell.getText());
                     for (XWPFParagraph tableP : cell.getParagraphs()){
@@ -86,11 +87,21 @@ public class Letter {
                             if (text.contains("ReferenceRep")){
                                 text = text.replace("ReferenceRep", "0000000000");
                             }
-                            if (text.contains("RefundAmountRep")){
-                                text = text.replace("RefundAmountRep", "R 0.00");
+                            if (text.contains("Total fraudRep")){
+                                text = text.replace("Total fraudRep", "R 20 000.00");
+                                run.setText(text,0);
                             }
+                            if (text.contains("Total refundRep")){
+                                text = text.replace("Total refundRep", "R 0.00");
+                                run.setText(text,0);
+                            }
+                            if (text.contains("Total lossRep")){
+                                text = text.replace("Total lossRep", "R 20 000.00");
+                                run.setText(text,0);
+                            }
+
                             run.setText(text,0);
-                          System.out.println("cell text ++++++ " + text);
+                          System.out.println("cell text------ ++++++ " + text);
 
                         }
                     }
@@ -117,9 +128,9 @@ public class Letter {
             for (int j = 0; j < runs.size(); j++ ){
                 String text2 = runs.get(j).getText(0);
 
-                if (text2 != null){
-                    text2 = text2.replace("the", "HELLLO");
-                }
+//                if (text2 != null){
+//                    text2 = text2.replace("the", "HELLLO");
+//                }
                 if (text2 != null){
                     text2 = text2.replace("InitialsRep", "SA");
                 }
@@ -141,6 +152,21 @@ public class Letter {
                 if (text2 != null){
                     text2 = text2.replace("PostalCodeRep", "2000");
                 }
+                if (text2 != null){
+                    text2 = text2.replace("Sequence of events", "Just thought it might be worth posting the code I have started to play around\n" +
+                            "with. Nothing special but I think it might be modifiable to work, and it\n" +
+                            "could serve as a reasonable starting point. The basic approach is as\n" +
+                            "described in my first post, open a document, get the numbering system\n" +
+                            "object, get the paragraphs and iterate through them. For each para, try to\n" +
+                            "get the numID. If that returns null then the paragraph is not in a list, if\n" +
+                            "a BigInteger object is returned then the para is in a list. If the para is\n" +
+                            "in a list, check to see that we are not already processing that list - if we\n" +
+                            "are then this is where concerns around levels and incrementing numbers can\n" +
+                            "be handled. Also, if the para is in a list and it is a 'new' list, get the\n" +
+                            "numbering system information. Lots of details to work out but it gets us\n" +
+                            "onto the first rung of the ladder I think.\n");
+                }
+
 
 
 
